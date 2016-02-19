@@ -1,0 +1,34 @@
+#%RAML 1.0
+title: Test API
+
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+                id: integer
+                name: string
+                email: string
+  post:
+    body:
+      application/json:
+        type: object
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+  /{name}:
+    get:
+      queryParameters:
+        name: string
+      body:
+        application/json:
+          properties:
+            id: integer
+            name: string
+            email: string
+        
