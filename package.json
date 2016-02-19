@@ -1,6 +1,6 @@
 {
-  "name": "diet-raml",
-  "version": "1.0.0",
+  "name": "diet-raml-generator",
+  "version": "0.2.1",
   "description": "A resource code generator for diet with raml",
   "main": "index.js",
   "directories": {
@@ -17,13 +17,22 @@
     "raml",
     "diet"
   ],
-  "author": "Oscar Reyes <oscarr.reyes17@gmail.com>",
+  "author": [
+    {
+      "name": "Oscar Reyes",
+      "email": "oscarr.reyes17@hotmail.com"
+    },{
+      "name": "Magdiel Marquez",
+      "email": "magdielikari@gmail.com"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Nosthertus/diet-raml/issues"
   },
   "homepage": "https://github.com/Nosthertus/diet-raml#readme",
   "dependencies": {
-    "raml-1-parser": "0.1.0-beta.6"
+    "raml-1-parser": "0.1.0-beta.6",
+    "utils": "^0.3.1"
   }
 }
