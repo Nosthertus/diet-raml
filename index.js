@@ -1,4 +1,5 @@
 var raml = require('./lib/raml.js');
+var file = require('./lib/file.js');
 var fs = require('fs');
 var utils = require('utils')._;
 
@@ -12,6 +13,11 @@ utils.each(resources, function(route){
 	methods = ramlParser.methods(route),
 	routes = [];
 
+	var script = new file();
+
+	script.directory = 'test/routes';
+	script.setName(route);
+
 	utils.each(methods, function(method){
 		t = '';
 		t += route + '.' + method + "(function($){\n";
@@ -21,15 +27,7 @@ utils.each(resources, function(route){
 		routes.push(t);
 	});
 
-	text = routes.join("\n\n");
+	script.addContent(routes.join("\n\n"));
 
-	fs.mkdir('test/routes', function(){
-		fs.writeFile('test/routes/' + route + '.js', text, function(err){
-			if(err)
-				throw err;
-
-			console.log('file:', route, 'successfully written');
-		});
-	});
-
+	script.build();
 });
