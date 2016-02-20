@@ -4,8 +4,6 @@ var fs = require('fs');
 var utils = require('utils')._;
 var argv = require('minimist')(process.argv.slice(2));
 
-console.log(argv);
-
 var ramlParser = new raml(argv.t);
 
 var resources = ramlParser.routes();
