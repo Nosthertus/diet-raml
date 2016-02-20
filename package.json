@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "diet-raml-generator": "index.js"
+    "diet-raml-generator": "bin/diet-raml-generator"
   },
   "repository": {
     "type": "git",
