@@ -2,9 +2,12 @@
 title: Test API
 
 /users:
+  displayName: users
   get:
+    description: Get all saved users
     responses:
       200:
+        description: List of all users
         body:
           application/json:
             type: object
@@ -12,23 +15,74 @@ title: Test API
                 id: integer
                 name: string
                 email: string
+      404:
+        description: Error on user database
+        body:
+          application/json:
+            type: object
+            properties:
+              code: integer
+              message: string
   post:
+    description: Create a new user
     body:
       application/json:
         type: object
     responses:
       200:
+        description: User saved succesfully
         body:
           application/json:
             type: object
-  /{name}:
+            properties:
+              id: integer
+              name: string
+              email: string
+      500:
+        description: Error saving user
+        body:
+          application/json:
+            type: object
+            properties:
+              code: integer
+              message: string
+  /{id}:
     get:
+      description: Get all user's public data
       queryParameters:
-        name: string
+        id: integer
+      responses:
+        200:
+          description: The single user data
+          body:
+            application/json:
+              type: object
+              properties:
+                id: integer
+                name: string
+                email: string
+        404:
+          description: User not found
+          body:
+            application/json:
+              type: object
+              properties:
+                id: integer
+                name: string
+                email: string
+    post:
+      description: Update user's public data
       body:
         application/json:
           properties:
-            id: integer
             name: string
             email: string
-        
+      responses:
+        200:
+          body:
+            application/json:
+              description: The updated user's data
+              properties:
+                id: integer
+                name: string
+                email: string

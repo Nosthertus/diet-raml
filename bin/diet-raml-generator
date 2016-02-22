@@ -8,31 +8,41 @@ var argv = require('minimist')(process.argv.slice(2));
 
 var ramlParser = new raml(argv.t, true);
 
-var resources = ramlParser.routes();
+var resources = ramlParser.resources();
 
-utils.each(resources, function(route){
+utils.each(resources, function(resource){
 	var text = '',
 	tab = "\t",
-	methods = ramlParser.methods(route),
 	routes = [];
 
-	console.log('Generating:', route);
+	console.log('Generating resources:', resource.name);
 
 	var script = new file();
 
 	script.directory = argv.d;
-	script.setName(route);
 
-	utils.each(methods, function(method){
-		t = '';
-		t += 'app.' + method + "('/" + route + "', function($){\n";
-		t += tab + "//your code here\n";
-		t += "});";
+	script.setName(resource.name);
 
-		routes.push(t);
+	utils.each(resource.methods, function(method){
+		routes.push(createRoute(resource.relativeUri, method, tab));
+	});
+
+	utils.each(resource.childs, function(child){
+		utils.each(child.methods, function(method){
+			routes.push(createRoute(child.completeRelativeUri, method, tab));
+		});
 	});
 
 	script.addContent(routes.join("\n\n"));
 
 	script.build();
 });
+
+function createRoute(name, method, tab){
+	var t = '';
+	t += 'app.' + method + "('" + name + "', function($){\n";
+	t += tab + "//your code here\n";
+	t += '});'
+
+	return t;
+}
