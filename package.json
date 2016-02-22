@@ -1,6 +1,6 @@
 {
   "name": "diet-raml-generator",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A resource code generator for diet with raml",
   "main": "index.js",
   "directories": {
@@ -30,7 +30,7 @@
       "email": "magdielikari@gmail.com"
     }
   ],
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Nosthertus/diet-raml/issues"
   },
