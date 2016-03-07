@@ -23,15 +23,7 @@ utils.each(resources, function(resource){
 
 	script.setName(resource.name);
 
-	utils.each(resource.methods, function(method){
-		routes.push(createRoute(resource.relativeUri, method, tab));
-	});
-
-	utils.each(resource.childs, function(child){
-		utils.each(child.methods, function(method){
-			routes.push(createRoute(child.completeRelativeUri, method, tab));
-		});
-	});
+	routes = buildRoutes(resource, tab);
 
 	script.addContent(routes.join("\n\n"));
 
@@ -45,4 +37,22 @@ function createRoute(name, method, tab){
 	t += '});'
 
 	return t;
+}
+
+function buildRoutes(resource, tab){
+	routes = [];
+
+	if(resource.methods.length > 0){
+		utils.each(resource.methods, function(method){
+			routes.push(createRoute(resource.completeRelativeUri, method, tab));
+		})
+	}
+
+	if(resource.childs.length > 0){
+		utils.each(resource.childs, function(child){
+			routes = routes.concat(buildRoutes(child, tab));
+		});
+	}
+
+	return routes;
 }
