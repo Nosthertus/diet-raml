@@ -1,6 +1,6 @@
 {
   "name": "diet-raml-generator",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "A resource code generator for diet with raml",
   "main": "index.js",
   "directories": {

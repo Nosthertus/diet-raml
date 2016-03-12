@@ -5,6 +5,7 @@ var file = require('./../lib/file.js');
 var fs = require('fs');
 var utils = require('utils')._;
 var argv = require('minimist')(process.argv.slice(2));
+var dietUtils = require('./../lib/diet.js');
 
 var ramlParser = new raml(argv.t, true);
 
@@ -32,7 +33,7 @@ utils.each(resources, function(resource){
 
 function createRoute(name, method, tab){
 	var t = '';
-	t += 'app.' + method + "('" + name + "', function($){\n";
+	t += 'app.' + method + "('" + dietUtils.parseUriParams(name) + "', function($){\n";
 	t += tab + "//your code here\n";
 	t += '});'
 

@@ -7,11 +7,11 @@ module.exports = function(app){
 		//your code here
 	});
 	
-	app.get('/users/{id}', function($){
+	app.get('/users/:id', function($){
 		//your code here
 	});
 	
-	app.post('/users/{id}', function($){
+	app.post('/users/:id', function($){
 		//your code here
 	});
 };

@@ -4,7 +4,7 @@ diet-raml-generator is a code generator for resources found in a raml file.
 
 ### Version
 
-0.5.1
+0.6.0
 
 ### Installation
 
