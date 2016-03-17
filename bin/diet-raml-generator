@@ -6,6 +6,7 @@ var fs = require('fs');
 var utils = require('utils')._;
 var argv = require('minimist')(process.argv.slice(2));
 var dietUtils = require('./../lib/diet.js');
+var coder = require('./../lib/coder.js');
 
 var ramlParser = new raml(argv.t, true);
 
@@ -24,34 +25,27 @@ utils.each(resources, function(resource){
 
 	script.setName(resource.name);
 
-	routes = buildRoutes(resource, tab);
+	routes = buildRoutes(resource);
 
 	script.addContent(routes.join("\n\n"));
 
 	script.build();
 });
 
-function createRoute(name, method, tab){
-	var t = '';
-	t += 'app.' + method + "('" + dietUtils.parseUriParams(name) + "', function($){\n";
-	t += tab + "//your code here\n";
-	t += '});'
-
-	return t;
-}
-
-function buildRoutes(resource, tab){
+function buildRoutes(resource){
 	routes = [];
 
 	if(resource.methods.length > 0){
 		utils.each(resource.methods, function(method){
-			routes.push(createRoute(resource.completeRelativeUri, method, tab));
+			var code = dietUtils.parseUriParams(resource.completeRelativeUri);
+			var route = coder.createRoute(code, method);
+			routes.push(route);
 		})
 	}
 
 	if(resource.childs.length > 0){
 		utils.each(resource.childs, function(child){
-			routes = routes.concat(buildRoutes(child, tab));
+			routes = routes.concat(buildRoutes(child));
 		});
 	}
 
