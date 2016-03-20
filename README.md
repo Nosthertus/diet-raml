@@ -3,6 +3,7 @@
 [![Join the chat at https://gitter.im/Nosthertus/diet-raml-generator](https://badges.gitter.im/Nosthertus/diet-raml-generator.svg)](https://gitter.im/Nosthertus/diet-raml-generator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 diet-raml-generator is a code generator for resources found in a raml file.
+Raml version used is 1.0
 
 ### Version
 
