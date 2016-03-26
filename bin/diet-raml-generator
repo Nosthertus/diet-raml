@@ -8,10 +8,9 @@ var argv = require('minimist')(process.argv.slice(2));
 var dietUtils = require('./../lib/diet.js');
 var coder = require('./../lib/coder.js');
 
-var ramlParser = new raml(argv.t, true);
+var ramlParser = new raml(argv.t, false);
 
 var resources = ramlParser.resources();
-
 utils.each(resources, function(resource){
 	var text = '',
 	tab = "\t",
@@ -31,6 +30,7 @@ utils.each(resources, function(resource){
 
 	script.build();
 });
+	
 
 function buildRoutes(resource){
 	routes = [];
