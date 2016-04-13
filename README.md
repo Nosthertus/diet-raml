@@ -7,7 +7,7 @@ Raml version used is 0.8
 
 ## Version
 
-0.6.0
+0.6.4
 
 ### Installation
 
@@ -29,9 +29,6 @@ The directory where to save the generated routes.
 The target raml file to read.
 
 ### F.A.Q
-**Why default branch is 0.8?**
-This repository was originally being developed for RAML 1.0, but due to some bugs found on the parser, I had to adapt the code for 0.8 version.
-
 **Will the generator fully support to RAML 1.0?**
 In time, when all bugs found from the parser which prevents the generator to fully work are fixed.. if i have time, i will work for 1.0 version, if anyone wants to help me with this project, i will gladly check and merge pull requests
 
