@@ -28,6 +28,8 @@ utils.each(resources, function(resource){
 
 	script.addContent(routes.join("\n\n"));
 
+	script.addContent("\n\n" + coder.createErrors(resource.responses));
+
 	script.build();
 });
 	
