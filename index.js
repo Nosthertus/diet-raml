@@ -1,36 +1,53 @@
+#!/usr/bin/env node
+
 var raml = require('./lib/raml.js');
 var file = require('./lib/file.js');
 var fs = require('fs');
 var utils = require('utils')._;
 var argv = require('minimist')(process.argv.slice(2));
+var dietUtils = require('./lib/diet.js');
+var coder = require('./lib/coder.js');
 
-var ramlParser = new raml(argv.t);
+var ramlParser = new raml(argv.t, false);
 
-var resources = ramlParser.routes();
-
-utils.each(resources, function(route){
+var resources = ramlParser.resources();
+utils.each(resources, function(resource){
 	var text = '',
 	tab = "\t",
-	methods = ramlParser.methods(route),
 	routes = [];
 
-	console.log('Generating:', route);
+	console.log('Generating resources:', resource.name);
 
 	var script = new file();
 
 	script.directory = argv.d;
-	script.setName(route);
 
-	utils.each(methods, function(method){
-		t = '';
-		t += 'app.' + method + "('/" + route + "', function($){\n";
-		t += tab + "//your code here\n";
-		t += "});";
+	script.setName(resource.name);
 
-		routes.push(t);
-	});
+	routes = buildRoutes(resource);
 
 	script.addContent(routes.join("\n\n"));
 
 	script.build();
 });
+	
+
+function buildRoutes(resource){
+	routes = [];
+
+	if(resource.methods.length > 0){
+		utils.each(resource.methods, function(method){
+			var code = dietUtils.parseUriParams(resource.completeRelativeUri);
+			var route = coder.createRoute(code, method);
+			routes.push(route);
+		})
+	}
+
+	if(resource.childs.length > 0){
+		utils.each(resource.childs, function(child){
+			routes = routes.concat(buildRoutes(child));
+		});
+	}
+
+	return routes;
+}
