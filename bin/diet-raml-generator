@@ -11,6 +11,7 @@ var coder = require('./../lib/coder.js');
 var ramlParser = new raml(argv.t, false);
 
 var resources = ramlParser.resources();
+var errors = ramlParser.allStatusErrors();
 utils.each(resources, function(resource){
 	var text = '',
 	tab = "\t",
@@ -28,9 +29,10 @@ utils.each(resources, function(resource){
 
 	script.addContent(routes.join("\n\n"));
 
+	script.addContent("\n\n" + coder.createErrors(errors));
+
 	script.build();
 });
-	
 
 function buildRoutes(resource){
 	routes = [];
