@@ -5,10 +5,6 @@
 diet-raml-generator is a code generator for resources found in a raml file.
 Raml version used is 0.8
 
-## Version
-
-0.6.4
-
 ### Installation
 
 ```sh
