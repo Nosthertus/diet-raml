@@ -29,10 +29,12 @@ utils.each(resources, function(resource){
 
 	script.addContent(routes.join("\n\n"));
 
-	script.addContent("\n\n" + coder.createErrors(errors));
+	script.intoFunction = true;
 
 	script.build();
 });
+
+generateErrors(errors);
 
 function buildRoutes(resource){
 	routes = [];
@@ -52,4 +54,17 @@ function buildRoutes(resource){
 	}
 
 	return routes;
+}
+
+function generateErrors(errors){
+	var errorStr = JSON.stringify(coder.parseErrors(errors));
+
+	var script = new file();
+
+	script.directory = argv.d;
+	script.setName('errors.json');
+
+	script.addContent(coder.indentCode(errorStr));
+
+	script.build();
 }
