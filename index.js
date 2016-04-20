@@ -12,6 +12,7 @@ var ramlParser = new raml(argv.t, false);
 
 var resources = ramlParser.resources();
 var errors = ramlParser.allStatusErrors();
+
 utils.each(resources, function(resource){
 	var text = '',
 	tab = "\t",
@@ -29,12 +30,13 @@ utils.each(resources, function(resource){
 
 	script.addContent(routes.join("\n\n"));
 
-	script.intoFunction = true;
+	script.inFunction = true;
 
 	script.build();
 });
 
 generateErrors(errors);
+generateErrorHandler();
 
 function buildRoutes(resource){
 	routes = [];
@@ -65,6 +67,17 @@ function generateErrors(errors){
 	script.setName('errors.json');
 
 	script.addContent(coder.indentCode(errorStr));
+
+	script.build();
+}
+
+function generateErrorHandler(){
+	var script = new file();
+
+	script.directory = argv.d;
+	script.setName('errorHandler');
+
+	script.addContent(coder.errorHandler());
 
 	script.build();
 }
