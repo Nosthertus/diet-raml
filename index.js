@@ -37,6 +37,7 @@ utils.each(resources, function(resource){
 
 generateErrors(errors);
 generateErrorHandler();
+generateIndex();
 
 function buildRoutes(resource){
 	routes = [];
@@ -80,6 +81,30 @@ function generateErrorHandler(){
 	script.setName('errorHandler');
 
 	script.addContent(coder.errorHandler());
+
+	script.build();
+}
+
+function generateIndex(){
+	console.log('Generating: Index file');
+	var script = new file();
+
+	var index = {
+		errors: '',
+		requires: ''
+	};
+
+	script.directory = argv.d;
+	script.setName('index');
+
+	utils.each(resources, function(resource){
+		index.requires += "require('./" + resource.name + "');\n";
+	});
+
+	index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
+
+	for(code in index)
+		script.addContent(index[code] + '\n\n');
 
 	script.build();
 }
