@@ -59,6 +59,7 @@ function buildRoutes(resource){
 }
 
 function generateErrors(errors){
+	console.log('Generating: Error JSON file')
 	var errorStr = JSON.stringify(coder.parseErrors(errors));
 
 	var script = new file();
@@ -72,6 +73,7 @@ function generateErrors(errors){
 }
 
 function generateErrorHandler(){
+	console.log('Generating: Error Handler file');
 	var script = new file();
 
 	script.directory = argv.d;
