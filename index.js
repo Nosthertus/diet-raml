@@ -30,6 +30,7 @@ utils.each(resources, function(resource){
 
 	script.addContent(routes.join("\n\n"));
 
+	script.requireErrorHandler = true;
 	script.inFunction = true;
 
 	script.build();
@@ -91,6 +92,7 @@ function generateIndex(){
 
 	var index = {
 		errors: '',
+		handler: '',
 		requires: ''
 	};
 
@@ -102,9 +104,13 @@ function generateIndex(){
 	});
 
 	index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
+	
+	index.handler = coder.loadTemplate('index_handler');
 
 	for(code in index)
 		script.addContent(index[code] + '\n\n');
+
+	script.inFunction = true;
 
 	script.build();
 }
