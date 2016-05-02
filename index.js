@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-var raml = require('./lib/raml.js');
-var file = require('./lib/file.js');
-var fs = require('fs');
-var utils = require('utils')._;
-var argv = require('minimist')(process.argv.slice(2));
+var raml      = require('./lib/raml.js');
+var file      = require('./lib/file.js');
+var fs        = require('fs');
+var utils     = require('utils')._;
+var argv      = require('./lib/args.js');
 var dietUtils = require('./lib/diet.js');
-var coder = require('./lib/coder.js');
+var coder     = require('./lib/coder.js');
 
 var ramlParser = new raml(argv.t, false);
 
