@@ -38,6 +38,7 @@
   "homepage": "https://github.com/Nosthertus/diet-raml#readme",
   "dependencies": {
     "bluebird": "^3.3.4",
+    "comment-builder": "^0.1.0",
     "deasync": "^0.1.4",
     "js-beautify": "^1.6.2",
     "raml-1-parser": "0.1.0-beta.6",
