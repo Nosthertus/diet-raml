@@ -111,6 +111,7 @@ function generateIndex(){
 		script.addContent(index[code] + '\n\n');
 
 	script.inFunction = true;
+	script.requireErrorHandler = true;
 
 	script.build();
 }
