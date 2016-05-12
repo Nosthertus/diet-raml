@@ -15,12 +15,14 @@ $ npm install diet-raml-generator -g
 ```sh
 $ diet-raml-generator 
 Options:
-  -t, --target     root raml file directory                  [string] [required]
-  -d, --directory  directory where to generate resources
+  -t, --target       root raml file directory                [string] [required]
+  -d, --directory    directory where to generate resources
                                             [string] [default: "raml-resources"]
+  -h, --add-schemas  Whether add schemas found in RAML file            [boolean]
 
 Examples:
   Usage: diet-raml-generator -t api.raml -d routes/raml-resources
+
 ```
 
 ### Documentation
@@ -32,6 +34,10 @@ The directory where to save the generated routes.
 **-t --target**
 *default:* null
 The target raml file to read.
+
+**-h --add-schemas**
+*default:* false
+Whether add schemas found in RAML file
 
 ### F.A.Q
 **Will the generator fully support to RAML 1.0?**
