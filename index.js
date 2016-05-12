@@ -2,16 +2,18 @@
 
 var raml      = require('./lib/raml.js');
 var file      = require('./lib/file.js');
-var fs        = require('fs');
 var utils     = require('utils')._;
 var argv      = require('./lib/args.js');
 var dietUtils = require('./lib/diet.js');
 var coder     = require('./lib/coder.js');
+var path      = require('path');
 
 var ramlParser = new raml(argv.t, false);
 
 var resources = ramlParser.resources();
 var errors = ramlParser.allStatusErrors();
+
+console.log("Directory selected:", argv.d);
 
 utils.each(resources, function(resource){
 	var text = '',
@@ -39,6 +41,7 @@ utils.each(resources, function(resource){
 generateErrors(errors);
 generateErrorHandler();
 generateIndex();
+generateSchemas();
 
 function buildRoutes(resource){
 	routes = [];
@@ -114,4 +117,34 @@ function generateIndex(){
 	script.requireErrorHandler = true;
 
 	script.build();
+}
+
+function generateSchemas(){
+	if(argv.h){
+		var schemas = ramlParser.schemas();
+
+		var dir = path.join(argv.d, "schemas");
+
+		console.log("Copying schemas to directory:", dir);
+
+		utils.each(schemas, function(schema){
+
+			var script = new file();
+			var name = new String;
+
+			// Get the resource name from the schema data
+			for(k in schema){
+				name = k;
+			}
+
+			console.log("Copying schema:", name);
+
+			script.directory = dir;
+			script.setName(name + ".json");
+
+			script.addContent(schema[name]);
+
+			script.build();
+		})
+	}
 }
