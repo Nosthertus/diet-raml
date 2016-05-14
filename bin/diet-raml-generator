@@ -63,59 +63,65 @@ function buildRoutes(resource){
 }
 
 function generateErrors(errors){
-	console.log('Generating: Error JSON file')
-	var errorStr = JSON.stringify(coder.parseErrors(errors));
+	if(!argv.e){
+		console.log('Generating: Error JSON file')
+		var errorStr = JSON.stringify(coder.parseErrors(errors));
 
-	var script = new file();
+		var script = new file();
 
-	script.directory = argv.d;
-	script.setName('errors.json');
+		script.directory = argv.d;
+		script.setName('errors.json');
 
-	script.addContent(coder.indentCode(errorStr));
+		script.addContent(coder.indentCode(errorStr));
 
-	script.build();
+		script.build();
+	}
 }
 
 function generateErrorHandler(){
-	console.log('Generating: Error Handler file');
-	var script = new file();
+	if(!argv.e){
+		console.log('Generating: Error Handler file');
+		var script = new file();
 
-	script.directory = argv.d;
-	script.setName('errorHandler');
+		script.directory = argv.d;
+		script.setName('errorHandler');
 
-	script.addContent(coder.errorHandler());
+		script.addContent(coder.errorHandler());
 
-	script.build();
+		script.build();
+	}
 }
 
 function generateIndex(){
-	console.log('Generating: Index file');
-	var script = new file();
+	if(!argv.n){
+		console.log('Generating: Index file');
+		var script = new file();
 
-	var index = {
-		errors: '',
-		handler: '',
-		requires: ''
-	};
+		var index = {
+			errors: '',
+			handler: '',
+			requires: ''
+		};
 
-	script.directory = argv.d;
-	script.setName('index');
+		script.directory = argv.d;
+		script.setName('index');
 
-	utils.each(resources, function(resource){
-		index.requires += "require('./" + resource.name + "');\n";
-	});
+		utils.each(resources, function(resource){
+			index.requires += "require('./" + resource.name + "');\n";
+		});
 
-	index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
-	
-	index.handler = coder.loadTemplate('index_handler');
+		index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
+		
+		index.handler = coder.loadTemplate('index_handler');
 
-	for(code in index)
-		script.addContent(index[code] + '\n\n');
+		for(code in index)
+			script.addContent(index[code] + '\n\n');
 
-	script.inFunction = true;
-	script.requireErrorHandler = true;
+		script.inFunction = true;
+		script.requireErrorHandler = true;
 
-	script.build();
+		script.build();
+	}
 }
 
 function generateSchemas(){
