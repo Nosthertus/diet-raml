@@ -6,6 +6,7 @@ var utils     = require('utils')._;
 var argv      = require('./../lib/args.js');
 var dietUtils = require('./../lib/diet.js');
 var coder     = require('./../lib/coder.js');
+var path      = require('path');
 
 var ramlParser = new raml(argv.t, false);
 
