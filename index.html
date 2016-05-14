@@ -47,16 +47,42 @@ Raml version used is 0.8</p>
 <h3>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h3>
 
-<div class="highlight highlight-source-shell"><pre>$ diet-raml-generator -t test/api.raml -d test/routes</pre></div>
+<div class="highlight highlight-source-shell"><pre>$ diet-raml-generator 
+Options:
+  -t, --target       root raml file directory                [string] [required]
+  -d, --directory    directory where to generate resources
+                                            [string] [default: <span class="pl-s"><span class="pl-pds">"</span>raml-resources<span class="pl-pds">"</span></span>]
+  -h, --add-schemas  Whether add schemas found <span class="pl-k">in</span> RAML file            [boolean]
+  -n, --no-index     Wheter omit index file generation                 [boolean]
+  -e, --no-errors    wheter omit error and handler file generation     [boolean]
+
+Examples:
+  Usage: diet-raml-generator -t api.raml -d routes/raml-resources
+</pre></div>
 
 <h3>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h3>
 
-<p><strong>-d</strong>
+<p><strong>-d --directory</strong>
+<em>default:</em> raml-resources
 The directory where to save the generated routes.</p>
 
-<p><strong>-t</strong>
+<p><strong>-t --target</strong>
+<em>default:</em> null
 The target raml file to read.</p>
+
+<p><strong>-h --add-schemas</strong>
+<em>default:</em> false
+Whether add schemas found in RAML file</p>
+
+<p><strong>-n --no-index</strong>
+<em>default:</em> false
+Whether omit the index file generation</p>
+
+<p><strong>-e --no-errors</strong>
+<em>default:</em> false
+Whether omit the error.json and errorHandler.js file generation
+This also ignores the injection of errorHandler on all resource files</p>
 
 <h3>
 <a id="faq" class="anchor" href="#faq" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>F.A.Q</h3>
