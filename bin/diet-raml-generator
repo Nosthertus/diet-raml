@@ -107,7 +107,7 @@ function generateIndex(){
 		script.setName('index');
 
 		utils.each(resources, function(resource){
-			index.requires += "require('./" + resource.name + "');\n";
+			index.requires += "require('./" + resource.name + "')(app);\n";
 		});
 
 		index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
