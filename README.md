@@ -19,6 +19,8 @@ Options:
   -d, --directory    directory where to generate resources
                                             [string] [default: "raml-resources"]
   -h, --add-schemas  Whether add schemas found in RAML file            [boolean]
+  -n, --no-index     Wheter omit index file generation                 [boolean]
+  -e, --no-errors    wheter omit error and handler file generation     [boolean]
 
 Examples:
   Usage: diet-raml-generator -t api.raml -d routes/raml-resources
@@ -38,6 +40,15 @@ The target raml file to read.
 **-h --add-schemas**
 *default:* false
 Whether add schemas found in RAML file
+
+**-n --no-index**
+*default:* false
+Whether omit the index file generation
+
+**-e --no-errors**
+*default:* false
+Whether omit the error.json and errorHandler.js file generation
+This also ignores the injection of errorHandler on all resource files
 
 ### F.A.Q
 **Will the generator fully support to RAML 1.0?**
