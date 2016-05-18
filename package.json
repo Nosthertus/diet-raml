@@ -1,6 +1,6 @@
 {
   "name": "diet-raml-generator",
-  "version": "0.10.3",
+  "version": "1.0.4",
   "description": "A resource code generator for diet with raml",
   "main": "index.js",
   "directories": {
@@ -39,7 +39,7 @@
   "dependencies": {
     "deasync": "^0.1.4",
     "js-beautify": "^1.6.2",
-    "node-commenter": "^1.0.0",
+    "node-commenter": "^1.0.1",
     "raml-parser": "^0.8.15",
     "utils": "^0.3.1",
     "yargs": "^4.6.0"
