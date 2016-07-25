@@ -38,6 +38,7 @@
   "homepage": "https://github.com/Nosthertus/diet-raml#readme",
   "dependencies": {
     "deasync": "^0.1.4",
+    "eventemitter2": "^2.0.0",
     "js-beautify": "^1.6.2",
     "mkdirp": "^0.5.1",
     "node-commenter": "^1.0.1",

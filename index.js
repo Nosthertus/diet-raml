@@ -2,6 +2,7 @@
 
 var raml      = require('./lib/raml.js');
 var file      = require('./lib/file.js');
+var _         = require("utils-pkg");
 var utils     = require('utils')._;
 var argv      = require('./lib/args.js');
 var dietUtils = require('./lib/diet.js');
@@ -15,7 +16,7 @@ var errors = ramlParser.allStatusErrors();
 
 console.log("Directory selected:", argv.d);
 
-utils.each(resources, function(resource){
+_.each(resources, function(index, resource, next){
 	var text = '',
 	tab = "\t",
 	routes = [];
@@ -36,6 +37,10 @@ utils.each(resources, function(resource){
 	script.inFunction = true;
 
 	script.build();
+
+	script.on("done", function(){
+		next();
+	});
 });
 
 generateErrors(errors);
