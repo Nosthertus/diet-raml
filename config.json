@@ -1,10 +1,11 @@
 {
 	"directory": {
-		"header": "./",
+		"header": "./middleware",
 		"routes": "./routes",
 		"traits": "./lib",
-		"errors": "./",
-		"errorHandler": "./",
-		"schemas": "./schemas",
+		"errors": "./middleware",
+		"pre_errors": "./middleware",
+		"post_errors": "./middleware",
+		"schemas": "./middleware/schemas"
 	}
 }

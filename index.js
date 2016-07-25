@@ -47,7 +47,7 @@ _.each(resources, function(index, resource, next){
 });
 
 generateErrors(errors);
-generateErrorHandler();
+generatePreErrors();
 generateHeader();
 generateSchemas();
 generateTraits(ramlParser.getTraits());
@@ -88,13 +88,13 @@ function generateErrors(errors){
 	}
 }
 
-function generateErrorHandler(){
+function generatePreErrors(){
 	if(!argv.e){
-		console.log('Generating: Error Handler file');
+		console.log('Generating: Pre-Error file');
 		var script = new file();
 
-		script.directory = path.join(argv.d, config.directory.errorHandler);
-		script.setName('errorHandler');
+		script.directory = path.join(argv.d, config.directory.pre_errors);
+		script.setName('pre_errors');
 
 		script.addContent(coder.errorHandler());
 
@@ -116,7 +116,7 @@ function generateHeader(){
 			requires: ''
 		};
 
-		script.directory = path.join(argv.d);
+		script.directory = path.join(argv.d, config.directory.header);
 		script.setName('header');
 
 		utils.each(resources, function(resource){
