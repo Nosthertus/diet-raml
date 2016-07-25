@@ -1,0 +1,7 @@
+color de dashboad
+#FAFAFA
+color logo
+#BBBDC2
+color enlace
+#487DCF
+color de raml
