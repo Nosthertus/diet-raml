@@ -1,0 +1,10 @@
+{
+	"directory": {
+		"header": "./",
+		"routes": "./routes",
+		"traits": "./lib",
+		"errors": "./",
+		"errorHandler": "./",
+		"schemas": "./schemas",
+	}
+}

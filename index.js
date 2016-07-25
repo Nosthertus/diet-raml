@@ -8,6 +8,9 @@ var argv      = require('./lib/args.js');
 var dietUtils = require('./lib/diet.js');
 var coder     = require('./lib/coder.js');
 var path      = require('path');
+var flutils   = require("flutils");
+
+var config = flutils.loadJSON("config.json");
 
 var ramlParser = new raml(argv.t, false);
 
@@ -25,7 +28,7 @@ _.each(resources, function(index, resource, next){
 
 	var script = new file();
 
-	script.directory = argv.d;
+	script.directory = path.join(argv.d, config.directory.routes);
 
 	script.setName(resource.name);
 
@@ -76,7 +79,7 @@ function generateErrors(errors){
 
 		var script = new file();
 
-		script.directory = argv.d;
+		script.directory = path.join(argv.d, config.directory.errors);
 		script.setName('errors.json');
 
 		script.addContent(coder.indentCode(errorStr));
@@ -90,7 +93,7 @@ function generateErrorHandler(){
 		console.log('Generating: Error Handler file');
 		var script = new file();
 
-		script.directory = argv.d;
+		script.directory = path.join(argv.d, config.directory.errorHandler);
 		script.setName('errorHandler');
 
 		script.addContent(coder.errorHandler());
@@ -113,11 +116,11 @@ function generateHeader(){
 			requires: ''
 		};
 
-		script.directory = argv.d;
+		script.directory = path.join(argv.d);
 		script.setName('header');
 
 		utils.each(resources, function(resource){
-			index.requires += "require('./" + resource.name + "');\n";
+			index.requires += "require('./" + path.join(config.directory.routes, resource.name) + "');\n";
 		});
 
 		index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
@@ -138,7 +141,7 @@ function generateSchemas(){
 	if(argv.h){
 		var schemas = ramlParser.schemas();
 
-		var dir = path.join(argv.d, "schemas");
+		var dir = path.join(argv.d, config.directory.schemas);
 
 		console.log("Copying schemas to directory:", dir);
 
@@ -167,7 +170,7 @@ function generateSchemas(){
 function generateTraits(traits){
 	console.log("Generating: traits file");
 
-	var dir = path.join(argv.d, "lib");
+	var dir = path.join(argv.d, config.directory.traits);
 
 	var script = new file();
 
