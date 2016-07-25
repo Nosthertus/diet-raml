@@ -45,8 +45,9 @@ _.each(resources, function(index, resource, next){
 
 generateErrors(errors);
 generateErrorHandler();
-generateIndex();
+generateHeader();
 generateSchemas();
+generateTraits(ramlParser.getTraits());
 
 function buildRoutes(resource){
 	routes = [];
@@ -98,9 +99,12 @@ function generateErrorHandler(){
 	}
 }
 
-function generateIndex(){
+/**
+ * Generate Head file that connects to all Diet-RAML files
+ */
+function generateHeader(){
 	if(!argv.n){
-		console.log('Generating: Index file');
+		console.log('Generating: Header file');
 		var script = new file();
 
 		var index = {
@@ -110,7 +114,7 @@ function generateIndex(){
 		};
 
 		script.directory = argv.d;
-		script.setName('index');
+		script.setName('header');
 
 		utils.each(resources, function(resource){
 			index.requires += "require('./" + resource.name + "');\n";
@@ -118,7 +122,7 @@ function generateIndex(){
 
 		index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
 		
-		index.handler = coder.loadTemplate('index_handler');
+		index.handler = coder.loadTemplate('head_handler');
 
 		for(code in index)
 			script.addContent(index[code] + '\n\n');
@@ -158,4 +162,25 @@ function generateSchemas(){
 			script.build();
 		})
 	}
+}
+
+function generateTraits(traits){
+	console.log("Generating: traits file");
+
+	var dir = path.join(argv.d, "lib");
+
+	var script = new file();
+
+	script.directory = dir;
+	script.setName("traits");
+
+	var content = new String;
+
+	_.each(traits, function(trait, value, next){
+		content += coder.export(trait, "function", "");
+		next();
+	}, function(){
+		script.addContent(coder.indentCode(content));
+		script.build();
+	});
 }
