@@ -8,6 +8,9 @@ var argv      = require('./lib/args.js');
 var dietUtils = require('./lib/diet.js');
 var coder     = require('./lib/coder.js');
 var path      = require('path');
+var flutils   = require("flutils");
+
+var config = flutils.loadJSON("config.json");
 
 var ramlParser = new raml(argv.t, false);
 
@@ -25,7 +28,7 @@ _.each(resources, function(index, resource, next){
 
 	var script = new file();
 
-	script.directory = argv.d;
+	script.directory = path.join(argv.d, config.directory.routes);
 
 	script.setName(resource.name);
 
@@ -44,9 +47,10 @@ _.each(resources, function(index, resource, next){
 });
 
 generateErrors(errors);
-generateErrorHandler();
-generateIndex();
+generatePreErrors();
+generateHeader();
 generateSchemas();
+generateTraits(ramlParser.getTraits());
 
 function buildRoutes(resource){
 	routes = [];
@@ -75,7 +79,7 @@ function generateErrors(errors){
 
 		var script = new file();
 
-		script.directory = argv.d;
+		script.directory = path.join(argv.d, config.directory.errors);
 		script.setName('errors.json');
 
 		script.addContent(coder.indentCode(errorStr));
@@ -84,13 +88,13 @@ function generateErrors(errors){
 	}
 }
 
-function generateErrorHandler(){
+function generatePreErrors(){
 	if(!argv.e){
-		console.log('Generating: Error Handler file');
+		console.log('Generating: Pre-Error file');
 		var script = new file();
 
-		script.directory = argv.d;
-		script.setName('errorHandler');
+		script.directory = path.join(argv.d, config.directory.pre_errors);
+		script.setName('pre_errors');
 
 		script.addContent(coder.errorHandler());
 
@@ -98,9 +102,12 @@ function generateErrorHandler(){
 	}
 }
 
-function generateIndex(){
+/**
+ * Generate Head file that connects to all Diet-RAML files
+ */
+function generateHeader(){
 	if(!argv.n){
-		console.log('Generating: Index file');
+		console.log('Generating: Header file');
 		var script = new file();
 
 		var index = {
@@ -109,16 +116,16 @@ function generateIndex(){
 			requires: ''
 		};
 
-		script.directory = argv.d;
-		script.setName('index');
+		script.directory = path.join(argv.d, config.directory.header);
+		script.setName('header');
 
 		utils.each(resources, function(resource){
-			index.requires += "require('./" + resource.name + "');\n";
+			index.requires += "require('./" + path.join(config.directory.routes, resource.name) + "');\n";
 		});
 
 		index.errors = coder.indentCode('var methodStatus = ' + JSON.stringify(coder.parseErrors(errors, true)) + ';');
 		
-		index.handler = coder.loadTemplate('index_handler');
+		index.handler = coder.loadTemplate('head_handler');
 
 		for(code in index)
 			script.addContent(index[code] + '\n\n');
@@ -134,7 +141,7 @@ function generateSchemas(){
 	if(argv.h){
 		var schemas = ramlParser.schemas();
 
-		var dir = path.join(argv.d, "schemas");
+		var dir = path.join(argv.d, config.directory.schemas);
 
 		console.log("Copying schemas to directory:", dir);
 
@@ -158,4 +165,25 @@ function generateSchemas(){
 			script.build();
 		})
 	}
+}
+
+function generateTraits(traits){
+	console.log("Generating: traits file");
+
+	var dir = path.join(argv.d, config.directory.traits);
+
+	var script = new file();
+
+	script.directory = dir;
+	script.setName("traits");
+
+	var content = new String;
+
+	_.each(traits, function(trait, value, next){
+		content += coder.export(trait, "function", "");
+		next();
+	}, function(){
+		script.addContent(coder.indentCode(content));
+		script.build();
+	});
 }
