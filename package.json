@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/Nosthertus/diet-raml#readme",
   "dependencies": {
+    "archiver": "^1.0.1",
     "deasync": "^0.1.4",
     "eventemitter2": "^2.0.0",
     "flutils": "^0.5.2",
