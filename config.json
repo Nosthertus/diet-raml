@@ -8,6 +8,6 @@
 		"errors": "./middleware",
 		"pre_errors": "./middleware",
 		"post_errors": "./middleware",
-		"schemas": "./middleware/schemas",
+		"schemas": "./middleware/schemas"
 	}
 }
