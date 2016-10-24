@@ -45,5 +45,6 @@ raml.generate([
 	"pre_errors",
 	"header",
 	"schemas",
-	"traits"
+	"traits",
+	"index"
 ]);
