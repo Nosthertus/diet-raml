@@ -35,6 +35,10 @@ raml.on("start.traits", () => {
 	console.log("Generating: traits file");
 });
 
+raml.on("start.index", () => {
+	console.log("Generating: index file");
+});
+
 raml.once("finish", () => {
 	console.log("Generator has finished");
 });
