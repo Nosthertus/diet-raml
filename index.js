@@ -10,7 +10,7 @@ var coder     = require('./lib/coder.js');
 var path      = require('path');
 var flutils   = require("flutils");
 
-var config = flutils.loadJSON("config.json");
+var config = flutils.loadJSON("./config.json");
 
 var ramlParser = new raml(argv.t, false);
 
